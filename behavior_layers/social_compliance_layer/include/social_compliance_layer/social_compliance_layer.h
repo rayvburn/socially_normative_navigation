@@ -31,7 +31,6 @@
 #ifndef SOCIAL_COMPLIANCE_LAYER_H
 #define SOCIAL_COMPLIANCE_LAYER_H
 
-#include <tf/transform_listener.h> // must come first due to conflict with Boost signals
 #include <boost/shared_ptr.hpp>
 #include <memory>
 

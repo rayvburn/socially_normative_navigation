@@ -31,7 +31,6 @@
 #ifndef OVERTAKING_LAYER_H
 #define OVERTAKING_LAYER_H
 
-#include <tf/transform_listener.h> // must come first due to conflict with Boost signals
 #include <memory>
 
 /// ros

@@ -31,8 +31,10 @@
 #include <overtaking_layer/overtaking_layer.h>
 #include <pluginlib/class_list_macros.h>
 
-#include <memory>
+#include <tf/tf.h>
+#include <tf/transform_datatypes.h>
 
+#include <memory>
 
 PLUGINLIB_EXPORT_CLASS(overtaking_layer::OvertakingLayer, costmap_2d::Layer)
 
@@ -135,15 +137,14 @@ void OvertakingLayer::updateRobotPose()
 {
     tf::StampedTransform transform;
     try {
-        tf_->waitForTransform(costmap_frame_,
+        geometry_msgs::TransformStamped transform_geom = tf_->lookupTransform(
+            costmap_frame_,
             robot_base_frame_,
-            ros::Time::now(),
-            ros::Duration(0.05));
-        tf_->lookupTransform(costmap_frame_,
-            robot_base_frame_,
-            ros::Time(0), transform);
+            ros::Time(0)
+        );
+        tf::transformStampedMsgToTF(transform_geom, transform);
     }
-    catch (tf::TransformException& e) {
+    catch (tf2::TransformException& e) {
         ROS_WARN_STREAM_THROTTLE(5.0, "TF lookup from robot_base_frame to global_frame failed. Reason: " << e.what());
         return;
     }
@@ -164,15 +165,14 @@ void OvertakingLayer::callbackTrackedPersons(const TPersons::ConstPtr& msg)
 {
     tf::StampedTransform costmap_transform;
     try {
-        tf_->waitForTransform(costmap_frame_,
+        geometry_msgs::TransformStamped transform_geom = tf_->lookupTransform(
+            costmap_frame_,
             msg->header.frame_id,
-            ros::Time::now(),
-            ros::Duration(0.05));
-        tf_->lookupTransform(costmap_frame_,
-            msg->header.frame_id,
-            ros::Time(0), costmap_transform);
+            ros::Time(0)
+        );
+        tf::transformStampedMsgToTF(transform_geom, costmap_transform);
     }
-    catch (tf::TransformException& e) {
+    catch (tf2::TransformException& e) {
         ROS_WARN_STREAM_THROTTLE(5.0, "TF lookup from tracking frame to costmap frame failed. Reason: " << e.what());
         return;
     }
