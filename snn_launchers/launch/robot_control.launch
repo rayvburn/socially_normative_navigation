@@ -29,8 +29,13 @@
 
     <!-- Collision status for front and rear laser -->
     <group if="$(arg publish_default_laser_collision_status)">
-      <node pkg="rostopic" type="rostopic" name="rostopic_laser_front" args="pub /spencer/control/collision/laser_front spencer_control_msgs/CollisionStatus '{collisionError: false, collisionWarning: false}' -r 35" />
-      <node pkg="rostopic" type="rostopic" name="rostopic_laser_rear" args="pub /spencer/control/collision/laser_rear spencer_control_msgs/CollisionStatus '{collisionError: false, collisionWarning: false}' -r 35" />
+      <!--
+        NOTE: this part is related to the legacy message that is no longer present in the SPENCER repo.
+        The code is directly changed to assume that all is OK with the lasers as the subscribers of those
+        topics were deleted.
+      -->
+      <!-- <node pkg="rostopic" type="rostopic" name="rostopic_laser_front" args="pub /spencer/control/collision/laser_front spencer_control_msgs/CollisionStatus '{collisionError: false, collisionWarning: false}' -r 35" /> -->
+      <!-- <node pkg="rostopic" type="rostopic" name="rostopic_laser_rear" args="pub /spencer/control/collision/laser_rear spencer_control_msgs/CollisionStatus '{collisionError: false, collisionWarning: false}' -r 35" /> -->
     </group>
   </group>
 
