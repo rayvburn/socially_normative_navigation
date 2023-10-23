@@ -127,10 +127,10 @@ private:
 SocialComplianceCost::SocialComplianceCost(const double& discount,
     const std::string& behavior_name,
     std::shared_ptr<CFParams> params)
-    : gamma_{ discount }
-    , behavior_name_{ behavior_name }
+    : weights_{ params->weights }
+    , gamma_{ discount }
     , region_type_{ params->region_type }
-    , weights_{ params->weights }
+    , behavior_name_{ behavior_name }
 {
     cutoff_relation_ = params->thresh_link;
     cutoff_personal_ = params->thresh_person;
