@@ -272,7 +272,7 @@ void FlowBehaviorLayer::updateBounds(double robot_x, double robot_y,
 /// \function callbackTrackedPersons
 /// \brief Receives tracked persons messages and saves them
 /// -----------------------------------------------------------
-void FlowBehaviorLayer::callbackTrackedPersons(const TPersons::ConstPtr& msg)
+void FlowBehaviorLayer::callbackTrackedPersons(const spencer_tracking_msgs::TrackedPersons::ConstPtr& msg)
 {
     tf::StampedTransform costmap_transform;
     try {

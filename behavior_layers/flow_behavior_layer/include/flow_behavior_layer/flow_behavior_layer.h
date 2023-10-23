@@ -46,7 +46,6 @@
 
 #include <flow_behavior_layer/FlowBehaviorLayerConfig.h>
 
-using TPersons = spencer_tracking_msgs::TrackedPersons;
 using FlowConfig = flow_behavior_layer::FlowBehaviorLayerConfig;
 
 using namespace behavior_functions;
@@ -79,7 +78,7 @@ public:
     virtual void matchSize();
 
     /// subcriber callbacks
-    void callbackTrackedPersons(const TPersons::ConstPtr& msg);
+    void callbackTrackedPersons(const spencer_tracking_msgs::TrackedPersons::ConstPtr& msg);
 
     void callbackSetGoal(const geometry_msgs::PoseStamped::ConstPtr& msg);
 
