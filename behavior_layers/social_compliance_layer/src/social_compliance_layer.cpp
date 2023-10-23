@@ -76,11 +76,10 @@ void SocialComplianceLayer::onInitialize()
     nh.param("groups_topic", groups_topic, std::string(""));
     nh.param("goal_topic", goal_topic, std::string(""));
     nh.param("path_topic", path_topic, std::string(""));
+    // new param - previously read from move_base but had hard-coded node name (which may differ)
+    nh.param("robot_base_frame", robot_base_frame_, std::string(""));
 
     costmap_frame_ = layered_costmap_->getGlobalFrameID();
-    // robot_base_frame_ = layered_costmap_->getBaseFrameID();
-    ros::param::param<std::string>("/move_base_node/global_costmap/robot_base_frame",
-        robot_base_frame_, std::string(""));
 
     ROS_INFO("Social compliance layer using the following data sources:");
     ROS_INFO("Persons: [%s], Groups: [%s], Goal: [%s], Costmap-Frame: [%s], Robot-Frame: [%s]",

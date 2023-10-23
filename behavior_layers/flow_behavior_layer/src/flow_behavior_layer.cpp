@@ -63,10 +63,10 @@ void FlowBehaviorLayer::onInitialize()
     std::string people_topic, goal_topic;
     nh.param("people_topic", people_topic, std::string(""));
     nh.param("goal_topic", goal_topic, std::string(""));
+    // new param - previously read from move_base but had hard-coded node name (which may differ)
+    nh.param("robot_base_frame", robot_base_frame_, std::string(""));
 
     costmap_frame_ = layered_costmap_->getGlobalFrameID();
-    ros::param::param<std::string>("/move_base_node/global_costmap/robot_base_frame",
-        robot_base_frame_, std::string(""));
 
     ROS_INFO("Flow behavior layer using the following data sources:");
     ROS_INFO("Persons: [%s], Goal: [%s]", people_topic.c_str(),

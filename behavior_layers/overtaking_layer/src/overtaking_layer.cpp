@@ -60,6 +60,8 @@ void OvertakingLayer::onInitialize()
     // read topics for data input
     std::string people_topic;
     nh.param("people_topic", people_topic, std::string(""));
+    // new param - previously read from move_base but had hard-coded node name (which may differ)
+    nh.param("robot_base_frame", robot_base_frame_, std::string(""));
 
     // setup subscribers and publishers for data exchange
     sub_persons_ = nh.subscribe(people_topic, 10, &OvertakingLayer::callbackTrackedPersons, this);
@@ -67,9 +69,6 @@ void OvertakingLayer::onInitialize()
 
     // setting up TF frames for costmap and robot
     costmap_frame_ = layered_costmap_->getGlobalFrameID();
-    ros::param::param<std::string>("/move_base_node/global_costmap/robot_base_frame",
-        robot_base_frame_, std::string(""));
-
 
     // setup dynamic reconfigure server
     dsrv_ = new dynamic_reconfigure::Server<overtaking_layer::OvertakingLayerConfig>(nh);
