@@ -324,7 +324,7 @@ void SocialComplianceLayer::updateBounds(double robot_x,
 /// \function callbackTrackedPersons
 /// \brief Receives tracked persons messages and saves them
 /// -----------------------------------------------------------
-void SocialComplianceLayer::callbackTrackedPersons(const TPersons::ConstPtr& msg)
+void SocialComplianceLayer::callbackTrackedPersons(const spencer_tracking_msgs::TrackedPersons::ConstPtr& msg)
 {
     tf::StampedTransform costmap_transform;
     try {
@@ -372,7 +372,7 @@ void SocialComplianceLayer::callbackTrackedPersons(const TPersons::ConstPtr& msg
 /// also constructs relations and publishes markers for
 /// visualizing the relations in Rviz
 /// -----------------------------------------------------------
-void SocialComplianceLayer::callbackTrackedGroups(const TGroups::ConstPtr& msg)
+void SocialComplianceLayer::callbackTrackedGroups(const spencer_tracking_msgs::TrackedGroups::ConstPtr& msg)
 {
     relations_.clear();
     for (const spencer_tracking_msgs::TrackedGroup& group : msg->groups) {

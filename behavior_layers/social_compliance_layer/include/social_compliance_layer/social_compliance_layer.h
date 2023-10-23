@@ -54,8 +54,6 @@
 
 namespace social_compliance_layer {
 
-using TPersons = spencer_tracking_msgs::TrackedPersons;
-using TGroups = spencer_tracking_msgs::TrackedGroups;
 using LayerConfig = social_compliance_layer::SocialComplianceLayerConfig;
 
 using namespace behavior_functions;
@@ -92,9 +90,9 @@ public:
     virtual void matchSize();
 
     /// subcriber callbacks
-    void callbackTrackedPersons(const TPersons::ConstPtr& msg);
+    void callbackTrackedPersons(const spencer_tracking_msgs::TrackedPersons::ConstPtr& msg);
 
-    void callbackTrackedGroups(const TGroups::ConstPtr& msg);
+    void callbackTrackedGroups(const spencer_tracking_msgs::TrackedGroups::ConstPtr& msg);
 
     void callbackSetGoal(const geometry_msgs::PoseStamped::ConstPtr& msg);
 
