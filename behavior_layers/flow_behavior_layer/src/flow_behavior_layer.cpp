@@ -83,8 +83,10 @@ void FlowBehaviorLayer::onInitialize()
 
     // behavior parameters
     std::vector<double> merge_weights, nomerge_weights;
-    nh.getParam("/flow_behavior_layer/behavior_params_merge", merge_weights);
-    nh.getParam("/flow_behavior_layer/behavior_params_nomerge", nomerge_weights);
+    // params are expected within the node's private namespace
+    nh.param("behavior_name", behavior_name_, std::string("merge"));
+    nh.getParam("behavior_params_merge", merge_weights);
+    nh.getParam("behavior_params_nomerge", nomerge_weights);
     if (behavior_name_ == "merge")
         weights_ = merge_weights;
     else

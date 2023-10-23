@@ -95,10 +95,12 @@ void SocialComplianceLayer::onInitialize()
     global_path_ = boost::make_shared<nav_msgs::Path>();
 
     // read cost function parameters
-    ros::param::param<std::string>("/social_compliance_layer/behavior_name", behavior_name_, "polite");
-    nh.getParam("/social_compliance_layer/behavior_params_polite", polite_);
-    nh.getParam("/social_compliance_layer/behavior_params_rude", rude_);
-    nh.getParam("/social_compliance_layer/behavior_params_sociable", sociable_);
+    // params are expected within the node's private namespace
+    nh.param("behavior_name", behavior_name_, std::string("polite"));
+    nh.getParam("behavior_params_polite", polite_);
+    nh.getParam("behavior_params_rude", rude_);
+    nh.getParam("behavior_params_sociable", sociable_);
+
     goal_ = Tpoint{ 0., 0. };
 
     min_social_cost_ = 0.0;
