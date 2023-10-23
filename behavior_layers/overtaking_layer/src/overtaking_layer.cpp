@@ -145,7 +145,11 @@ void OvertakingLayer::updateRobotPose()
         tf::transformStampedMsgToTF(transform_geom, transform);
     }
     catch (tf2::TransformException& e) {
-        ROS_WARN_STREAM_THROTTLE(5.0, "TF lookup from robot_base_frame to global_frame failed. Reason: " << e.what());
+        ROS_WARN_STREAM_THROTTLE(
+            5.0,
+            "TF lookup from robot_base_frame (" << robot_base_frame_ << ") to global_frame (" << costmap_frame_ << ") "
+            << "failed in OvertakingLayer. Reason: " << e.what()
+        );
         return;
     }
 
