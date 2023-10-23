@@ -377,6 +377,17 @@ void SocialComplianceLayer::callbackTrackedGroups(const spencer_tracking_msgs::T
     relations_.clear();
     for (const spencer_tracking_msgs::TrackedGroup& group : msg->groups) {
         int n = group.track_ids.size();
+        if (n <= 1) {
+            ROS_INFO_THROTTLE_NAMED(
+                5.0,
+                "social_compliance_layer",
+                "Received tracked group (ID %lu) but it is ill-formed containing %lu member(s) - aborting. "
+                "This message is shown at most each 5 seconds.",
+                group.group_id,
+                group.track_ids.size()
+            );
+            return;
+        }
         std::vector<std::vector<int> > combinations = generateCombinations(n, 2);
         for (std::vector<int> v : combinations) {
             Person p1 = persons_map_[group.track_ids[v[0]]];
