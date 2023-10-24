@@ -131,6 +131,9 @@ void SocialComplianceLayer::computeLayerCostmap(const double& min_i,
     std::vector<double> all_costs;
     all_costs.clear();
 
+    std::lock_guard<std::mutex> lockg(mutex_groups_);
+    std::lock_guard<std::mutex> lockp(mutex_persons_);
+
     double dist_to_robot = 0.0;
     for (int j = min_j; j < max_j; j++) {
         for (int i = min_i; i < max_i; i++) {
@@ -345,6 +348,9 @@ void SocialComplianceLayer::callbackTrackedPersons(const spencer_tracking_msgs::
         return;
     }
 
+    std::lock_guard<std::mutex> lockp(mutex_persons_);
+    std::lock_guard<std::mutex> lockg(mutex_groups_);
+
     persons_.clear();
     persons_map_.clear();
 
@@ -379,6 +385,9 @@ void SocialComplianceLayer::callbackTrackedPersons(const spencer_tracking_msgs::
 /// -----------------------------------------------------------
 void SocialComplianceLayer::callbackTrackedGroups(const spencer_tracking_msgs::TrackedGroups::ConstPtr& msg)
 {
+    std::lock_guard<std::mutex> lockg(mutex_groups_);
+    std::lock_guard<std::mutex> lockp(mutex_persons_);
+
     relations_.clear();
     for (const spencer_tracking_msgs::TrackedGroup& group : msg->groups) {
         int n = group.track_ids.size();
@@ -406,6 +415,8 @@ void SocialComplianceLayer::callbackTrackedGroups(const spencer_tracking_msgs::T
 
 void SocialComplianceLayer::callbackGlobalPath(const nav_msgs::Path::ConstPtr& path)
 {
+    std::lock_guard<std::mutex> lock(mutex_gpath_);
+
     for (const auto& pose : path->poses) {
         global_path_->poses.push_back(pose);
     }
@@ -416,6 +427,8 @@ void SocialComplianceLayer::callbackGlobalPath(const nav_msgs::Path::ConstPtr& p
 ///
 point_t SocialComplianceLayer::nextMilestone()
 {
+    std::lock_guard<std::mutex> lock(mutex_gpath_);
+
     // If no path is available, use the the global goal
     if (global_path_->poses.size() < 1)
         return point_t(goal_[0], goal_[1]);

@@ -33,6 +33,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <memory>
+#include <mutex>
 
 /// ros
 #include <ros/ros.h>
@@ -115,6 +116,10 @@ protected:
 private:
     void reconfigureCB(LayerConfig& config, uint32_t level);
     dynamic_reconfigure::Server<LayerConfig>* dsrv_;
+
+    std::mutex mutex_groups_;
+    std::mutex mutex_persons_;
+    std::mutex mutex_gpath_;
 
     ros::Subscriber sub_persons_;
     ros::Subscriber sub_groups_;
