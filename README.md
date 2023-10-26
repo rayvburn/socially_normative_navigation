@@ -34,3 +34,8 @@ using Bayesian Inverse Reinforcement Learning},
     year={2016},
 }
 ```
+
+## Limitations
+
+- costmap areas that are distant from the robot (distance defined by the `update_range`) are left as they are once the robot moves away (therefore there are strange artifacts at the boundaries of the costmap)
+  - this applies to both `SocialComplianceLayer` and `FlowBehaviorLayer`
